@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Hello World</string>
+    <string name="header_skill">Skills</string>
+    <string name="add_skill">Add skill</string>
+    <string name="header_personalAchie">Personal Achievements</string>
+    <string name="add_personalAchie">Add Achievements</string>
+</resources>
