@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/profile_menu"
     android:onClick="closePopup"
-    android:background="#80d6d6d6">
+    android:background="#AB535353">
 
 
     <RelativeLayout
@@ -15,7 +15,9 @@
         android:layout_centerInParent="true"
         android:background="@drawable/popup_bg"
         android:orientation="horizontal"
-        android:rotation="0">
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:elevation="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,6 +38,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="13dp"
             android:background="@drawable/button_color"
+            android:textColor="@color/btn_txt"
             android:textSize="10dp"
             android:text="placeholder" />
 
