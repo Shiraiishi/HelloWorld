@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/profile_menu"
     android:onClick="closePopup"
-    android:background="#AB535353">
+    android:background="#A4222222">
 
 
     <RelativeLayout
@@ -34,7 +34,7 @@
             android:id="@+id/btn_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cardContainer_skill"
+            android:layout_below="@id/cardContainer_bg"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="13dp"
             android:background="@drawable/button_color"
@@ -42,8 +42,8 @@
             android:textSize="10dp"
             android:text="placeholder" />
 
-        <RelativeLayout
-            android:id="@+id/cardContainer_skill"
+        <LinearLayout
+            android:id="@+id/cardContainer_bg"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginLeft="13dp"
@@ -52,7 +52,24 @@
             android:layout_marginBottom="13dp"
             android:background="@drawable/container_box"
             android:elevation="10dp"
-            android:orientation="vertical" />
+            android:orientation="vertical">
+
+            <ScrollView
+                android:id="@+id/popup_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="1dp">
+
+                <LinearLayout
+                    android:id="@+id/popup_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="13dp"
+                    android:orientation="vertical"/>
+
+            </ScrollView>
+
+        </LinearLayout>
 
         <TextView
             android:textStyle="bold"
@@ -64,14 +81,14 @@
             android:text="placeholder"
             android:textColor="#ffffff"
             android:layout_toRightOf="@id/star"
-            android:layout_above="@id/cardContainer_skill"
+            android:layout_above="@id/cardContainer_bg"
             android:textSize="24dp" />
 
         <ImageView
             android:id="@+id/star"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/cardContainer_skill"
+            android:layout_above="@id/cardContainer_bg"
             android:layout_marginLeft="13dp"
             android:layout_marginBottom="13dp"
             app:srcCompat="@android:drawable/btn_star" />

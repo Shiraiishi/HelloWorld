@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -15,10 +16,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity
 {
     PopupWindow menupopup;
+    public List<skillCard> skillList;
+    LinearLayout container;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -64,9 +69,34 @@ public class MainActivity extends AppCompatActivity
             public void run()
             {
                 menupopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+                addItemsToPopup();
             }
         });
     }
+
+    public void addItemsToPopup() {
+        if (menupopup != null && menupopup.isShowing()) {
+            // Inflate the item layout
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            LinearLayout container = menupopup.getContentView().findViewById(R.id.popup_container);
+
+            // Example data - retrieve db
+            String[] items = {"Item 1", "Item 2", "Item 3"};
+
+            for (String itemText : items) {
+                // Inflate the item layout
+                View itemView = inflater.inflate(R.layout.popup_card, container, false);
+
+                // Set the item text
+                TextView itemTextView = itemView.findViewById(R.id.card_name);
+                itemTextView.setText(itemText);
+
+                // Add the item view to the container
+                container.addView(itemView);
+            }
+        }
+    }
+
 
     public void closePopup(View view)
     {
