@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
     }
 
     public void skillSet(View view)
@@ -51,7 +49,6 @@ public class MainActivity extends AppCompatActivity
     {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupViewer = inflater.inflate(R.layout.profile_menu_popup, null);
-
         TextView header = popupViewer.findViewById(R.id.profile_menu_popup_header);
         TextView button = popupViewer.findViewById(R.id.btn_add);
         header.setText(headerTxt);
@@ -69,12 +66,12 @@ public class MainActivity extends AppCompatActivity
             public void run()
             {
                 menupopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
-                addItemsToPopup();
+                addItemsToPopup(headerTxt);
             }
         });
     }
 
-    public void addItemsToPopup() {
+    public void addItemsToPopup(String header) {
         if (menupopup != null && menupopup.isShowing()) {
             // Inflate the item layout
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
