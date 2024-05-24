@@ -5,6 +5,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -16,14 +18,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity
 {
     PopupWindow menupopup;
-    public List<skillCard> skillList;
-    LinearLayout container;
+    public SkillDatabaseHelper dbSkill;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -35,8 +41,14 @@ public class MainActivity extends AppCompatActivity
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
     }
 
+    public void skillSet()
+    {
+        Popup("Skills","Add Skill");
+    }
     public void skillSet(View view)
     {
         Popup("Skills","Add Skill");
@@ -67,6 +79,21 @@ public class MainActivity extends AppCompatActivity
             {
                 menupopup.showAtLocation(layout, Gravity.CENTER, 0, 0);
                 addItemsToPopup(headerTxt);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch(headerTxt) {
+                            case "Skills":
+                                    addSkill();
+                                break;
+                            case "Personal Achievement":
+                                    // placeholder
+                                break;
+                            default:
+                                // code block
+                        }
+                    }
+                });
             }
         });
     }
@@ -94,6 +121,52 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void addSkill(){
+        popupDismiss(menupopup);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View addSkillForm = inflater.inflate(R.layout.add_skill_form, null);
+        View layout = findViewById(R.id.main);
+
+        int width   = ViewGroup.LayoutParams.MATCH_PARENT,
+            height  = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        PopupWindow addSkillWindow = new PopupWindow(addSkillForm, width, height, true);
+
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                addSkillWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+                TextView back = addSkillWindow.getContentView().findViewById(R.id.add_skill_form_back);
+
+                Button add = addSkillWindow.getContentView().findViewById(R.id.add_skill_form_btn);
+
+                EditText name = addSkillWindow.getContentView().findViewById(R.id.skill_name_input),
+                         detail = addSkillWindow.getContentView().findViewById(R.id.skill_detail_input);
+
+                dbSkill = new SkillDatabaseHelper(MainActivity.this);
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String skillName = name.getText().toString();
+                        String skillDetail = detail.getText().toString();
+                        dbSkill.addSkill(skillName, skillDetail);
+                        popupDismiss(addSkillWindow);
+                        skillSet();
+                    }
+                });
+                back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupDismiss(addSkillWindow);
+                        skillSet();
+                    }
+                });
+
+            }
+        });
+    }
 
     public void closePopup(View view)
     {
@@ -103,6 +176,19 @@ public class MainActivity extends AppCompatActivity
                 // Dismiss the popup on the main UI thread
                 if (menupopup != null && menupopup.isShowing()) {
                     menupopup.dismiss();
+                }
+            }
+        });
+    }
+
+    public void popupDismiss(PopupWindow popup)
+    {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Dismiss the popup on the main UI thread
+                if (popup != null && popup.isShowing()) {
+                    popup.dismiss();
                 }
             }
         });

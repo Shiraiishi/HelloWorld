@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 public class SkillDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "skills.db";
@@ -28,8 +30,8 @@ public class SkillDatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_SKILL_NAME + " TEXT, " +
                     COLUMN_SKILL_DESC + " TEXT, " +
-                    COLUMN_SKILL_LEVEL + " INTEGER, " +
-                    COLUMN_SKILL_EXP + " INTEGER);";
+                    COLUMN_SKILL_LEVEL + " INTEGER DEFAULT 1, " +
+                    COLUMN_SKILL_EXP + " INTEGER DEFAULT 0);";
 
     private Context context;
 
@@ -68,13 +70,11 @@ public class SkillDatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Method to add a new skill
-    public void addSkill(String name, String desc, int level, int exp) {
+    public void addSkill(String name, String desc) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_SKILL_NAME, name);
         values.put(COLUMN_SKILL_DESC, desc);
-        values.put(COLUMN_SKILL_LEVEL, level);
-        values.put(COLUMN_SKILL_EXP, exp);
         db.insert(TABLE_SKILLS, null, values);
         db.close();
     }
@@ -82,6 +82,7 @@ public class SkillDatabaseHelper extends SQLiteOpenHelper {
     // Method to get all skills
     public Cursor getAllSkills() {
         SQLiteDatabase db = this.getReadableDatabase();
+
         return db.query(TABLE_SKILLS, null, null, null, null, null, null);
     }
 
