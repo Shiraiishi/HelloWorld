@@ -1,5 +1,6 @@
 package com.example.helloworld;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+
 
 public class SkillDatabaseHelper extends SQLiteOpenHelper {
 
@@ -80,10 +82,26 @@ public class SkillDatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Method to get all skills
-    public Cursor getAllSkills() {
+    public ArrayList<Skill> getAllSkillsAsArrayList() {
+        ArrayList<Skill> skillsList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_SKILLS, null, null, null, null, null, null);
 
-        return db.query(TABLE_SKILLS, null, null, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+                @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex(COLUMN_SKILL_NAME));
+                @SuppressLint("Range") String desc = cursor.getString(cursor.getColumnIndex(COLUMN_SKILL_DESC));
+                @SuppressLint("Range") int level = cursor.getInt(cursor.getColumnIndex(COLUMN_SKILL_LEVEL));
+                @SuppressLint("Range") int exp = cursor.getInt(cursor.getColumnIndex(COLUMN_SKILL_EXP));
+
+                Skill skill = new Skill(id, name, desc, level, exp);
+                skillsList.add(skill);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return skillsList;
     }
 
     // Method to update a skill

@@ -11,18 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity
@@ -31,8 +26,7 @@ public class MainActivity extends AppCompatActivity
     public SkillDatabaseHelper dbSkill;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
@@ -41,8 +35,6 @@ public class MainActivity extends AppCompatActivity
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
     }
 
     public void skillSet()
@@ -57,8 +49,7 @@ public class MainActivity extends AppCompatActivity
     {
         Popup("Personal Achievement","Add Achievement");
     }
-    public void Popup(String headerTxt, String btnTxt)
-    {
+    public void Popup(String headerTxt, String btnTxt) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupViewer = inflater.inflate(R.layout.profile_menu_popup, null);
         TextView header = popupViewer.findViewById(R.id.profile_menu_popup_header);
@@ -97,30 +88,30 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
     public void addItemsToPopup(String header) {
         if (menupopup != null && menupopup.isShowing()) {
             // Inflate the item layout
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
             LinearLayout container = menupopup.getContentView().findViewById(R.id.popup_container);
 
-            // Example data - retrieve db
-            String[] items = {"Item 1", "Item 2", "Item 3"};
+            dbSkill = new SkillDatabaseHelper(MainActivity.this);
 
-            for (String itemText : items) {
+            dbSkill.getAllSkillsAsArrayList();
+            ArrayList<Skill> skillsList = dbSkill.getAllSkillsAsArrayList();
+
+            for (Skill itemText : skillsList) {
                 // Inflate the item layout
                 View itemView = inflater.inflate(R.layout.popup_card, container, false);
 
                 // Set the item text
                 TextView itemTextView = itemView.findViewById(R.id.card_name);
-                itemTextView.setText(itemText);
+                itemTextView.setText(itemText.getName());
 
                 // Add the item view to the container
                 container.addView(itemView);
             }
         }
     }
-
     public void addSkill(){
         popupDismiss(menupopup);
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -163,13 +154,10 @@ public class MainActivity extends AppCompatActivity
                         skillSet();
                     }
                 });
-
             }
         });
     }
-
-    public void closePopup(View view)
-    {
+    public void closePopup(View view) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -180,9 +168,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
-    public void popupDismiss(PopupWindow popup)
-    {
+    public void popupDismiss(PopupWindow popup) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -193,5 +179,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
+
 }
 
