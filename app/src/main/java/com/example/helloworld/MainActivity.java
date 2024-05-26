@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
 {
     PopupWindow menupopup;
-    public SkillDatabaseHelper dbSkill;
+    private UserDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        dbHelper = new UserDatabaseHelper(this);
     }
 
     public void skillSet()
@@ -94,10 +95,10 @@ public class MainActivity extends AppCompatActivity
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
             LinearLayout container = menupopup.getContentView().findViewById(R.id.popup_container);
 
-            dbSkill = new SkillDatabaseHelper(MainActivity.this);
+            dbHelper.createSkillsTableIfNotExists();
 
-            dbSkill.getAllSkillsAsArrayList();
-            ArrayList<Skill> skillsList = dbSkill.getAllSkillsAsArrayList();
+            SkillDatabaseHelper skillDbHelper = dbHelper.getSkillDatabaseHelper();
+            ArrayList<Skill> skillsList = skillDbHelper.getAllSkills();
 
             for (Skill itemText : skillsList) {
                 // Inflate the item layout
@@ -136,13 +137,13 @@ public class MainActivity extends AppCompatActivity
                 EditText name = addSkillWindow.getContentView().findViewById(R.id.skill_name_input),
                          detail = addSkillWindow.getContentView().findViewById(R.id.skill_detail_input);
 
-                dbSkill = new SkillDatabaseHelper(MainActivity.this);
+                SkillDatabaseHelper skillDbHelper = dbHelper.getSkillDatabaseHelper();
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String skillName = name.getText().toString();
                         String skillDetail = detail.getText().toString();
-                        dbSkill.addSkill(skillName, skillDetail);
+                        skillDbHelper.addSkill(skillName, skillDetail);
                         popupDismiss(addSkillWindow);
                         skillSet();
                     }

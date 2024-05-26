@@ -1,17 +1,18 @@
 package com.example.helloworld;
-public class Skill {
+
+public class Task {
     private long id;
     private String name;
     private String description;
-    private int level;
-    private int exp;
+    private int reward;
+    private String lastCompletion;
 
-    public Skill(long id, String name, String description, int level, int exp) {
+    public Task(long id, String name, String description, int reward, String lastCompletion) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.level = level;
-        this.exp = exp;
+        this.reward = reward;
+        this.lastCompletion = lastCompletion;
     }
 
     // Getters
@@ -27,11 +28,11 @@ public class Skill {
         return description;
     }
 
-    public int getLevel() {
-        return level;
+    public int getReward() {
+        return reward;
     }
 
-    public int getExp() {
-        return exp;
+    public String getLastCompletion() {
+        return lastCompletion;
     }
 }
