@@ -23,7 +23,8 @@ public class TaskDatabaseHelper {
                 + "task_name TEXT,"
                 + "task_description TEXT,"
                 + "reward INTEGER,"
-                + "last_completion TEXT)";
+                + "last_completion TEXT,"
+                + "related_skill TEXT)";
         db.execSQL(CREATE_TASKS_TABLE);
     }
 

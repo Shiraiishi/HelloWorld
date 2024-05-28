@@ -1,44 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="13dp"
-    android:scrollbars="horizontal"
+    android:fillViewport="true"
     tools:context=".MainActivity">
 
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_color"
-        android:onClick="skillSet"
-        android:text="Skill Set"
-        android:textColor="@color/btn_txt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.086"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.043" />
+        android:orientation="vertical"
+        android:scrollbars="horizontal">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_color"
-        android:onClick="PersonalAchievement"
-        android:text="Personal Achie..."
-        android:textColor="@color/btn_txt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.109"
-        app:layout_constraintStart_toEndOf="@+id/button2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.042" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
 
-</LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginRight="5dp"
+                android:padding="6dp"
+                android:background="@drawable/profile_bg"
+                android:layout_alignParentBottom="true">
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/skill"
+                    android:onClick="skillSet"
+                    android:text=""
+                    android:textColor="@color/btn_txt" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_toRightOf="@+id/button2"
+                    android:background="@drawable/achie"
+                    android:onClick="PersonalAchievement"
+                    android:text=""
+                    android:textColor="@color/btn_txt" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_toRightOf="@+id/button3"
+                    android:background="@drawable/pers_achie"
+                    android:onClick="PersonalAchievement"
+                    android:text=""
+                    android:textColor="@color/btn_txt" />
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_toRightOf="@+id/button4"
+                    android:background="@drawable/colle"
+                    android:onClick="PersonalAchievement"
+                    android:text=""
+                    android:textColor="@color/btn_txt" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/mainscreen_bg"
+            android:padding="0dp">
+
+            <TextView
+                android:id="@+id/header_task"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:layout_marginLeft="13dp"
+                android:text="Tasks"
+                android:textColor="#ffffff"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/star"
+                android:layout_alignBottom="@id/star" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/mainscreen_bg"
+                android:orientation="horizontal"
+                android:padding="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_centerInParent="true"
+                    android:background="#727272"
+                    android:elevation="10dp"
+                    android:layout_margin="11dp"
+                    android:rotation="-1.5"/>
+
+                <LinearLayout
+                    android:id="@+id/task_cardContainer_bg"
+                    android:layout_margin="13dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="450dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="13dp"
+                    android:background="@drawable/container_box"
+                    android:elevation="10dp"
+                    android:orientation="vertical">
+
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/task_scrollview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="1dp">
+
+                        <LinearLayout
+                            android:id="@+id/task_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="13dp" />
+                    </androidx.core.widget.NestedScrollView>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lmao"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lmao"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lmao"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

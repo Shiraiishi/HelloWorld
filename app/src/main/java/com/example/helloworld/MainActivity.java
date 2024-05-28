@@ -36,6 +36,30 @@ public class MainActivity extends AppCompatActivity
             return insets;
         });
         dbHelper = new UserDatabaseHelper(this);
+        start();
+    }
+
+    public void start(){
+            // Inflate the item layout
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            LinearLayout container = findViewById(R.id.task_container);
+
+            dbHelper.createSkillsTableIfNotExists();
+
+            SkillDatabaseHelper skillDbHelper = dbHelper.getSkillDatabaseHelper();
+            ArrayList<Skill> skillsList = skillDbHelper.getAllSkills();
+
+            for (Skill itemText : skillsList) {
+                // Inflate the item layout
+                View itemView = inflater.inflate(R.layout.popup_card, container, false);
+
+                // Set the item text
+                TextView itemTextView = itemView.findViewById(R.id.card_name);
+                itemTextView.setText(itemText.getName());
+
+                // Add the item view to the container
+                container.addView(itemView);
+            }
     }
 
     public void skillSet()
@@ -89,6 +113,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
     public void addItemsToPopup(String header) {
         if (menupopup != null && menupopup.isShowing()) {
             // Inflate the item layout
@@ -180,7 +205,5 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
-
 }
 
