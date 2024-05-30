@@ -28,12 +28,12 @@ public class TaskDatabaseHelper {
         db.execSQL(CREATE_TASKS_TABLE);
     }
 
-    public void addTask(Task task) {
+    public void addTask(String name, String desc) {
         ContentValues values = new ContentValues();
-        values.put("task_name", task.getName());
-        values.put("task_description", task.getDescription());
-        values.put("reward", task.getReward());
-        values.put("last_completion", task.getLastCompletion());
+        values.put("task_name", name);
+        values.put("task_description", desc);
+//        values.put("reward", task.getReward());
+//        values.put("last_completion", task.getLastCompletion());
 
         db.insert("tasks", null, values);
     }

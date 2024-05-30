@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="13dp"
+    android:background="#3E3C38"
+    android:orientation="vertical"
+    android:id="@+id/add_skill_form"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/add_task_form_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginTop="13dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task name"
+        android:textSize="30dp"
+        android:layout_marginTop="50dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/task_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:background="#121212"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Task name"
+        android:padding="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Details"
+        android:textSize="30dp"
+        android:layout_marginTop="13dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/task_detail_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:background="#121212"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Task detail"
+        android:padding="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Difficulty"
+        android:textSize="30dp"
+        android:layout_marginTop="13dp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginTop="13dp"
+            android:layout_alignParentTop="true"
+            android:id="@+id/exp_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 EXP"
+            android:textSize="15dp"
+            android:layout_centerHorizontal="true" />
+
+        <SeekBar
+            android:max="100"
+            android:layout_below="@+id/exp_display"
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:progress="10"
+            android:progressTint="#42A4FF"
+            android:thumbTint="@color/btn_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Easy"
+            android:layout_alignStart="@+id/seekBar"
+            android:layout_alignBottom="@id/seekBar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hard"
+            android:layout_alignEnd="@+id/seekBar"
+            android:layout_alignBottom="@id/seekBar"/>
+
+        <Spinner
+            android:id="@+id/related_skill"
+            android:layout_width="200dp"
+            android:layout_height="42dp"
+            android:background="#121212"
+            android:layout_marginTop="90dp"
+            android:autofillHints="Related Skill"/>
+
+        <Button
+            android:id="@+id/add_task_form_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/button_color"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:text="Add task"
+            android:textColor="#121212" />
+    </RelativeLayout>
+
+
+
+
+
+</LinearLayout>

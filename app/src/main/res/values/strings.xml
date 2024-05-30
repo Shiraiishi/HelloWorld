@@ -4,4 +4,7 @@
     <string name="add_skill">Add skill</string>
     <string name="header_personalAchie">Personal Achievements</string>
     <string name="add_personalAchie">Add Achievements</string>
+    <string name="select_skill">Related Skill</string>
+
+
 </resources>

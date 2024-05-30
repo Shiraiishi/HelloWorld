@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -16,8 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity
@@ -36,30 +35,32 @@ public class MainActivity extends AppCompatActivity
             return insets;
         });
         dbHelper = new UserDatabaseHelper(this);
+        dbHelper.createTasksTableIfNotExists();
+        dbHelper.createSkillsTableIfNotExists();
         start();
     }
 
     public void start(){
             // Inflate the item layout
-            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            LinearLayout container = findViewById(R.id.task_container);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        LinearLayout container = findViewById(R.id.task_container_main);
+        GetCard.taskDaily(inflater,container,dbHelper);
+    }
 
-            dbHelper.createSkillsTableIfNotExists();
-
-            SkillDatabaseHelper skillDbHelper = dbHelper.getSkillDatabaseHelper();
-            ArrayList<Skill> skillsList = skillDbHelper.getAllSkills();
-
-            for (Skill itemText : skillsList) {
-                // Inflate the item layout
-                View itemView = inflater.inflate(R.layout.popup_card, container, false);
-
-                // Set the item text
-                TextView itemTextView = itemView.findViewById(R.id.card_name);
-                itemTextView.setText(itemText.getName());
-
-                // Add the item view to the container
-                container.addView(itemView);
-            }
+    public void daily(View view){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        LinearLayout container = findViewById(R.id.task_container_main);
+        GetCard.taskDaily(inflater,container,dbHelper);
+    }
+    public void weekly(View view){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        LinearLayout container = findViewById(R.id.task_container_main);
+        GetCard.taskWeekly(inflater,container,dbHelper);
+    }
+    public void limited(View view){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        LinearLayout container = findViewById(R.id.task_container_main);
+        GetCard.taskLimited(inflater,container,dbHelper);
     }
 
     public void skillSet()
@@ -70,10 +71,31 @@ public class MainActivity extends AppCompatActivity
     {
         Popup("Skills","Add Skill");
     }
-    public void PersonalAchievement(View view)
+    public void personalAchievement()
     {
         Popup("Personal Achievement","Add Achievement");
     }
+    public void personalAchievement(View view)
+    {
+        Popup("Personal Achievement","Add Achievement");
+    }
+    public void achievement()
+    {
+        Popup("Achievement"," ");
+    }
+    public void achievement(View view)
+    {
+        Popup("Achievement"," ");
+    }
+    public void collection()
+    {
+        Popup("Collections"," ");
+    }
+    public void collection(View view)
+    {
+        Popup("Collections"," ");
+    }
+
     public void Popup(String headerTxt, String btnTxt) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupViewer = inflater.inflate(R.layout.profile_menu_popup, null);
@@ -81,7 +103,10 @@ public class MainActivity extends AppCompatActivity
         TextView button = popupViewer.findViewById(R.id.btn_add);
         header.setText(headerTxt);
         button.setText(btnTxt);
-
+        if(headerTxt =="Collections" ||headerTxt =="Achievement")
+        {
+            button.setVisibility(View.INVISIBLE);
+        }
         View layout = findViewById(R.id.main);
 
         int width   = ViewGroup.LayoutParams.MATCH_PARENT,
@@ -102,8 +127,14 @@ public class MainActivity extends AppCompatActivity
                             case "Skills":
                                     addSkill();
                                 break;
-                            case "Personal Achievement":
+                            case "Achievement":
                                     // placeholder
+                                break;
+                            case "Personal Achievement":
+                                // placeholder
+                                break;
+                            case "Collection":
+                                // placeholder
                                 break;
                             default:
                                 // code block
@@ -114,30 +145,93 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    public void addItemsToPopup(String header) {
+    public void addItemsToPopup(String headerTxt) {
         if (menupopup != null && menupopup.isShowing()) {
             // Inflate the item layout
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
             LinearLayout container = menupopup.getContentView().findViewById(R.id.popup_container);
 
-            dbHelper.createSkillsTableIfNotExists();
-
-            SkillDatabaseHelper skillDbHelper = dbHelper.getSkillDatabaseHelper();
-            ArrayList<Skill> skillsList = skillDbHelper.getAllSkills();
-
-            for (Skill itemText : skillsList) {
-                // Inflate the item layout
-                View itemView = inflater.inflate(R.layout.popup_card, container, false);
-
-                // Set the item text
-                TextView itemTextView = itemView.findViewById(R.id.card_name);
-                itemTextView.setText(itemText.getName());
-
-                // Add the item view to the container
-                container.addView(itemView);
+            switch(headerTxt) {
+                case "Skills":
+                    GetCard.skill(inflater,container,dbHelper);
+                    break;
+                case "Achievement":
+                    // GetCard.achievement (inflater,container,dbHelper);
+                    break;
+                case "Personal Achievement":
+                    GetCard.personalAchievement(inflater,container,dbHelper);
+                    break;
+                case "Collection":
+                    // GetCard.collection(inflater,container,dbHelper);
+                    break;
+                default:
+                    // code block
             }
         }
     }
+
+    public void addTask(View view){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View addTaskForm = inflater.inflate(R.layout.add_task_form, null);
+        View layout = findViewById(R.id.main);
+
+        int width   = ViewGroup.LayoutParams.MATCH_PARENT,
+            height  = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        PopupWindow addTaskWindow = new PopupWindow(addTaskForm, width, height, true);
+
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                addTaskWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+                SeekBar  seekBar = addTaskWindow.getContentView().findViewById(R.id.seekBar);
+                TextView back = addTaskWindow.getContentView().findViewById(R.id.add_task_form_back),
+                         exp = addTaskWindow.getContentView().findViewById(R.id.exp_display);
+                Button   add = addTaskWindow.getContentView().findViewById(R.id.add_task_form_btn);
+                EditText name = addTaskWindow.getContentView().findViewById(R.id.task_name_input),
+                         detail = addTaskWindow.getContentView().findViewById(R.id.task_detail_input);
+
+                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        exp.setText(progress*10 + " EXP");
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+
+                    }
+                });
+
+                TaskDatabaseHelper taskDbHelper = dbHelper.getTaskDatabaseHelper();
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String cardName = name.getText().toString();
+                        String cardDetail = detail.getText().toString();
+                        taskDbHelper.addTask(cardName, cardDetail);
+                        popupDismiss(addTaskWindow);
+                        start();
+                    }
+                });
+                back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupDismiss(addTaskWindow);
+                        start();
+                    }
+                });
+            }
+        });
+    }
+
     public void addSkill(){
         popupDismiss(menupopup);
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -155,10 +249,9 @@ public class MainActivity extends AppCompatActivity
             public void run()
             {
                 addSkillWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
                 TextView back = addSkillWindow.getContentView().findViewById(R.id.add_skill_form_back);
-
                 Button add = addSkillWindow.getContentView().findViewById(R.id.add_skill_form_btn);
-
                 EditText name = addSkillWindow.getContentView().findViewById(R.id.skill_name_input),
                          detail = addSkillWindow.getContentView().findViewById(R.id.skill_detail_input);
 
@@ -166,9 +259,9 @@ public class MainActivity extends AppCompatActivity
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String skillName = name.getText().toString();
-                        String skillDetail = detail.getText().toString();
-                        skillDbHelper.addSkill(skillName, skillDetail);
+                        String cardName = name.getText().toString();
+                        String cardDetail = detail.getText().toString();
+                        skillDbHelper.addSkill(cardName, cardDetail);
                         popupDismiss(addSkillWindow);
                         skillSet();
                     }
@@ -206,4 +299,3 @@ public class MainActivity extends AppCompatActivity
         });
     }
 }
-
