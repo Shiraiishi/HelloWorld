@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity
         LinearLayout container = findViewById(R.id.task_container_main);
         GetCard.taskDaily(inflater,container,dbHelper);
     }
-
     public void daily(View view){
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         LinearLayout container = findViewById(R.id.task_container_main);
@@ -128,10 +127,10 @@ public class MainActivity extends AppCompatActivity
                                     addSkill();
                                 break;
                             case "Achievement":
-                                    // placeholder
+                                    //placeholder
                                 break;
                             case "Personal Achievement":
-                                // placeholder
+                                    addAchie();
                                 break;
                             case "Collection":
                                 // placeholder
@@ -232,6 +231,51 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    public void editUser(View view){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View form = inflater.inflate(R.layout.edit_user, null);
+        View layout = findViewById(R.id.main);
+
+        int width   = ViewGroup.LayoutParams.MATCH_PARENT,
+            height  = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        PopupWindow window = new PopupWindow(form, width, height, true);
+
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                window.showAtLocation(layout, Gravity.CENTER, 0, 0);
+                TextView back = window.getContentView().findViewById(R.id.edit_user_back),
+                        aboutme = findViewById(R.id.about_me),
+                        username = findViewById(R.id.user_name);
+                Button   save = window.getContentView().findViewById(R.id.edit_user_btn);
+                EditText name = window.getContentView().findViewById(R.id.edit_name_input),
+                        detail = window.getContentView().findViewById(R.id.about_me_input);
+                save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String cardName = name.getText().toString();
+                        username.setText(cardName);
+                        String cardDetail = detail.getText().toString();
+                        aboutme.setText(cardDetail);
+
+                        popupDismiss(window);
+                        start();
+                    }
+                });
+                back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupDismiss(window);
+                        start();
+                    }
+                });
+            }
+        });
+    }
+
     public void addSkill(){
         popupDismiss(menupopup);
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -276,6 +320,52 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
+    public void addAchie(){
+        popupDismiss(menupopup);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View form = inflater.inflate(R.layout.add_achie_form, null);
+        View layout = findViewById(R.id.main);
+
+        int width   = ViewGroup.LayoutParams.MATCH_PARENT,
+            height  = ViewGroup.LayoutParams.MATCH_PARENT;
+
+        PopupWindow window = new PopupWindow(form, width, height, true);
+
+        runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                window.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+                TextView back = window.getContentView().findViewById(R.id.add_achie_form_back);
+                Button add = window.getContentView().findViewById(R.id.add_achie_form_btn);
+                EditText name = window.getContentView().findViewById(R.id.achie_name_input),
+                        detail = window.getContentView().findViewById(R.id.achie_detail_input);
+
+                SkillDatabaseHelper skillDbHelper = dbHelper.getSkillDatabaseHelper();
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String cardName = name.getText().toString();
+                        String cardDetail = detail.getText().toString();
+                        skillDbHelper.addSkill(cardName, cardDetail);
+                        popupDismiss(window);
+                        personalAchievement();
+                    }
+                });
+                back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupDismiss(window);
+                        personalAchievement();
+                    }
+                });
+            }
+        });
+    }
+
     public void closePopup(View view) {
         runOnUiThread(new Runnable() {
             @Override

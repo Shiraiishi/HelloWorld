@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="13dp"
+    android:background="#3E3C38"
+    android:orientation="vertical"
+    android:id="@+id/add_skill_form"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/edit_user_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginTop="13dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change name"
+        android:textSize="30dp"
+        android:layout_marginTop="50dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edit_name_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:background="#121212"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="name"
+        android:padding="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About me"
+        android:textSize="30dp"
+        android:layout_marginTop="13dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/about_me_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:background="#121212"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="details"
+        android:padding="10dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="270dp">
+
+        <Button
+            android:background="@drawable/button_color"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:text="Save"
+            android:textColor="#121212"
+            android:id="@+id/edit_user_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</LinearLayout>
